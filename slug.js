@@ -1,7 +1,7 @@
 class Slug extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity) {
         // call Phaser Physics Sprite constructor
-        super(scene, game.config.width + 71, 348, 'slug'); 
+        super(scene, game.config.width + 71, game.config.height-50, 'slug'); 
         
         this.parentScene = scene;               // maintain scene context
 

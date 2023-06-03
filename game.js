@@ -80,7 +80,8 @@ class SlugLevel extends Phaser.Scene {
         rolypoly.setDragY(200);
         rolypoly.destroyed = false;
 
-        this.physics.add.collider(rolypoly, this.ground);
+        //this.physics.add.collider(rolypoly, this.ground);
+        this.physics.world.collide(rolypoly, this.ground, this.groundCollision, null, this);
 
         // set up barrier group
         this.slugGroup = this.add.group({
@@ -123,6 +124,15 @@ class SlugLevel extends Phaser.Scene {
         rolypoly.destroy();  
         this.time.delayedCall(2000, () => { this.scene.start('firstload'); });
     }
+
+    groundCollision() {
+        if (groundCollide==true){
+            rolypoly.body.velocity.y = 0;
+            groundCollide = false;
+        } else {
+            groundCollide = true;
+        }
+    }
 }
 
 const game = new Phaser.Game({
@@ -130,15 +140,15 @@ const game = new Phaser.Game({
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 1080,
-        height: 640
+        height: 320
     },
     physics: {
         default: 'arcade',
         arcade: {
-            //debug: true,
+            debug: true,
             gravity: {
                 x: 0,
-                y: 0.8
+                y: 0.4
             }
         }
     },
@@ -151,5 +161,6 @@ let centerY = game.config.height/2;
 let w = game.config.width;
 let h = game.config.height;
 let rolypoly = null;
-const rolypolyVelocity = 150;
+const rolypolyVelocity = 250;
 let cursors;
+let groundCollide = false;
